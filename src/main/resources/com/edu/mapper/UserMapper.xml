@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.dao.UserDao">
+
+    <!--查询用户信息-->
+    <select id="findByNameOrPhone" resultType="com.edu.entity.User">
+        select id, name, age, salary, phone
+        from t_user
+        <where>
+            <if test="name != ''">
+                name like concat(#{name},'%')
+            </if>
+            <if test="phone != ''">
+                or phone like concat('%', #{phone}, '%')
+            </if>
+        </where>
+    </select>
+
+    <!--更新-->
+    <update id="update" parameterType="User">
+        update t_user
+        set name   = #{name},
+            age    = #{age},
+            salary = #{salary},
+            phone  = #{phone}
+    </update>
+
+    <!--根据id查询用户信息-->
+    <select id="findUserById" parameterType="string" resultType="com.edu.entity.User">
+        select id, name, age, salary, phone
+        from t_user
+        where id = #{id}
+    </select>
+    <!--删除用户信息-->
+    <delete id="delete" parameterType="string">
+        delete
+        from t_user
+        where id = #{id}
+    </delete>
+
+    <!--保存用户信息-->
+    <insert id="save" parameterType="User">
+        insert into bootvue.t_user
+        values (#{id}, #{name}, #{age}, #{salary}, #{phone})
+    </insert>
+
+    <!--查询所有用户-->
+    <select id="findAll" resultType="com.edu.entity.User">
+        select id, name, age, salary, phone
+        from bootvue.t_user
+    </select>
+</mapper>
