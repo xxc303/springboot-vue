@@ -13,6 +13,7 @@ public interface UserDao {
 
     //模糊查询
     List<User> findByNameOrPhone(String name, String phone);
+
     //更新
     void update(User user);
 
